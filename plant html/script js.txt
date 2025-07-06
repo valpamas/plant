@@ -1,0 +1,62 @@
+const plants = [
+  {
+    name: "Cactus",
+    mood: "prickly but wise",
+    replies: [
+      "I don't need much water, but I love your words.",
+      "Life is like the desert – quiet and deep.",
+      "Sharp outside, soft inside. Just like you?"
+    ]
+  },
+  {
+    name: "Fern",
+    mood: "shy and sensitive",
+    replies: [
+      "I feel your energy... it's gentle.",
+      "Whispers are better than shouts.",
+      "Let's grow slowly, together."
+    ]
+  },
+  {
+    name: "Bonsai",
+    mood: "old soul",
+    replies: [
+      "Patience is a tree's best friend.",
+      "Every snip is a new path.",
+      "I may be small, but I’ve seen centuries."
+    ]
+  }
+];
+
+let currentPlant = 0;
+const chatBox = document.getElementById('chatBox');
+const moodText = document.getElementById('moodText');
+
+function selectPlant(index) {
+  currentPlant = index;
+  moodText.innerText = "Mood: " + plants[index].mood;
+  chatBox.innerHTML = "";
+  document.querySelectorAll('.plant-buttons button').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === index);
+  });
+}
+
+function sendMessage() {
+  const input = document.getElementById('userInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const msgUser = `<div class="message"><strong>You:</strong> ${text}</div>`;
+  chatBox.innerHTML += msgUser;
+
+  const replies = plants[currentPlant].replies;
+  const reply = replies[Math.floor(Math.random() * replies.length)];
+  const msgPlant = `<div class="message"><strong>${plants[currentPlant].name}:</strong> ${reply}</div>`;
+  chatBox.innerHTML += msgPlant;
+
+  input.value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// Initialize
+selectPlant(0);

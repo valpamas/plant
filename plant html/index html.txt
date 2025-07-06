@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PlantPal – Talk to Your Plant</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🌿 PlantPal</h1>
+    <p style="text-align:center;">Talk to your plant. It listens 🌱</p>
+    <div class="plant-buttons">
+      <button onclick="selectPlant(0)" id="plant0">Cactus</button>
+      <button onclick="selectPlant(1)" id="plant1">Fern</button>
+      <button onclick="selectPlant(2)" id="plant2">Bonsai</button>
+    </div>
+    <div class="mood" id="moodText">Mood: </div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Say something..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PlantPal – Talk to Your Plant</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #d1fae5;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      font-size: 2em;
+    }
+    .plant-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+    .selected {
+      background: #34d399;
+      color: white;
+    }
+    .mood {
+      text-align: center;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    .chat-box {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      height: 200px;
+      overflow-y: auto;
+      padding: 10px;
+      background: #f9f9f9;
+    }
+    .message {
+      margin-bottom: 8px;
+    }
+    .message strong {
+      display: block;
+    }
+    .input-area {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .input-area input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    .input-area button {
+      background: #34d399;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌿 PlantPal</h1>
+    <p style="text-align:center;">Talk to your plant. It listens 🌱</p>
+    <div class="plant-buttons">
+      <button onclick="selectPlant(0)" id="plant0">Cactus</button>
+      <button onclick="selectPlant(1)" id="plant1">Fern</button>
+      <button onclick="selectPlant(2)" id="plant2">Bonsai</button>
+    </div>
+    <div class="mood" id="moodText">Mood: </div>
+    <div class="chat-box" id="chatBox"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Say something..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const plants = [
+      {
+        name: "Cactus",
+        mood: "prickly but wise",
+        replies: [
+          "I don't need much water, but I love your words.",
+          "Life is like the desert – quiet and deep.",
+          "Sharp outside, soft inside. Just like you?"
+        ]
+      },
+      {
+        name: "Fern",
+        mood: "shy and sensitive",
+        replies: [
+          "I feel your energy... it's gentle.",
+          "Whispers are better than shouts.",
+          "Let's grow slowly, together."
+        ]
+      },
+      {
+        name: "Bonsai",
+        mood: "old soul",
+        replies: [
+          "Patience is a tree's best friend.",
+          "Every snip is a new path.",
+          "I may be small, but I’ve seen centuries."
+        ]
+      }
+    ];
+
+    let currentPlant = 0;
+    const chatBox = document.getElementById('chatBox');
+    const moodText = document.getElementById('moodText');
+
+    function selectPlant(index) {
+      currentPlant = index;
+      moodText.innerText = "Mood: " + plants[index].mood;
+      chatBox.innerHTML = "";
+      document.querySelectorAll('.plant-buttons button').forEach((btn, i) => {
+        btn.classList.toggle('selected', i === index);
+      });
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const msgUser = `<div class="message"><strong>You:</strong> ${text}</div>`;
+      chatBox.innerHTML += msgUser;
+
+      const replies = plants[currentPlant].replies;
+      const reply = replies[Math.floor(Math.random() * replies.length)];
+      const msgPlant = `<div class="message"><strong>${plants[currentPlant].name}:</strong> ${reply}</div>`;
+      chatBox.innerHTML += msgPlant;
+
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // Initialize
+    selectPlant(0);
+  </script>
+</body>
+</html>
